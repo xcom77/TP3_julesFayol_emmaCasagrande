@@ -26,109 +26,42 @@ public class Agence {
 
     }
 
-    public Client[] ajouter(Client[] repertoryClient) {
-        LocalDate permisdate;
-        String emailClient;
-        LocalDate birthdate;
-
-        System.out.println("voulez vous ajouter un client ? oui/non");
-        Scanner cs1 = new Scanner(System.in);
-        boolean information = true;
-        while (information) {
-            String choice = cs1.nextLine();
-            if (choice.equals("oui")) {
-                break;
-            }
-            if (choice.equals("non")) {
-                System.out.println("aucun changement, 'non");
-                return repertoryClient;
-            }
-        }
-
-        Scanner cs2 = new Scanner(System.in);
-        Scanner cs3 = new Scanner(System.in);
-        Scanner cs4 = new Scanner(System.in);
-
-        while (true) {
-            System.out.println("entrez votre email :");
-
-            emailClient = cs2.nextLine();
-
-            System.out.println("date d'obtention du permis :");
-            System.out.println("entrez le jour jj/");
-            int JP = cs2.nextInt();
-            System.out.println("entrez le mois mm/");
-            int MP = cs3.nextInt();
-            System.out.println("entrez le jour aaaa/");
-            int AP = cs4.nextInt();
-
-            permisdate = LocalDate.of(AP, MP, JP);
-
-            System.out.println(" ");
-            System.out.println("date de naissance :");
-            System.out.println("entrez le jour jj/");
-            int JN = cs2.nextInt();
-            System.out.println("entrez le mois mm/");
-            int MN = cs3.nextInt();
-            System.out.println("entrez le annee aaaa/");
-            int AN = cs4.nextInt();
-
-            birthdate = LocalDate.of(AN, MN, JN);
-
-            System.out.println("");
-            System.out.println("verification des information :");
-            System.out.println("la date de naissance du client est le :" + birthdate);
-            System.out.println("la date du permis du client est le :" + permisdate);
-            System.out.println("l'email du client est:" + emailClient);
-
-            while (true) {
-                System.out.println("confirmer vous les informations? oui/non");
-                String choice = cs2.nextLine();
-                if (choice.equals("oui")) {
-                    information = false;
-                    break;
-                }
-                if (choice.equals("non")) {
-                    break;
-                }
-            }
-            break;
-        }
+    public void ajouter(String emailClient, LocalDate permisdate, LocalDate birthdate) {
 
         Client client = new Client(emailClient, permisdate, birthdate);
 
         int tab_length_0;
         tab_length_0 = repertoryClient.length;
         Client[] tabtemp = new Client[tab_length_0 + 1]; // creation d'une liste de taille n+1
+
         for (int i = 0; i < tab_length_0; i++) {
             tabtemp[i] = repertoryClient[i]; // transfert des valeurs vers le nouveau tableau
         }
-        tabtemp[tab_length_0] = client; // ajoue de la nouvelle valeur dans la tab n+1 du tableau
+        tabtemp[tab_length_0] = client; // ajoue de la nouvelle valeur dans la tab n+1 du tableau 
 
-        tab_length_0 = repertoryClient.length;
+        tab_length_0 = tabtemp.length;
+        System.out.println(tab_length_0);
 
         if (tab_length_0 > 2) {
-
-            Client tempclient;
-            for (int i = 0; i < tab_length_0; i++) {
-                for (int b = i + 1; b < tab_length_0; b++) {
-                    if (repertoryClient[i].placerApres(repertoryClient[b].emailclient)) {
-                        tempclient = repertoryClient[i];
-                        repertoryClient[i] = repertoryClient[b];
-                        repertoryClient[b] = tempclient;
-                    }
-                }
+            int c = tab_length_0 - 1;
+            Client clientemp;
+            while (c - 1 > 0 && !tabtemp[c].placerApres(tabtemp[c - 1].emailclient)) {
+                System.out.println(c);
+                clientemp = tabtemp[c];
+                tabtemp[c] = tabtemp[c - 1];
+                tabtemp[c - 1] = clientemp;
+                c--;
             }
-        }
 
-        return tabtemp;
+        }
+        repertoryClient = tabtemp;
+
     }
 
- 
     //methode ajout vehicule sans moteur n1
-    public void ajouter(String gamme, String identifiant, int genre, int nbplace, int Nbroue){
-        
-        VehiculeSansMoteur vehicule = new VehiculeSansMoteur( gamme,  identifiant,  genre,  nbplace,  Nbroue);
+    public void ajouter(String gamme, String identifiant, int genre, int nbplace, int Nbroue) {
+
+        VehiculeSansMoteur vehicule = new VehiculeSansMoteur(gamme, identifiant, genre, nbplace, Nbroue);
 
         int tab_length_0;
         tab_length_0 = flotteVehicule.length;
@@ -138,17 +71,15 @@ public class Agence {
         }
         tabtemp[tab_length_0] = vehicule;
 
-        flotteVehicule = tabtemp;          
-        
+        flotteVehicule = tabtemp;
+
     }
-    
+
     //methode ajout vehicule n2
-    
-    
-     //methode ajout vehicule n3
-    public void ajouter(String gamme, String identifiant, int genre, int nbplace, int nbporte, int agemin, int permismin, String modele){
-        
-        VehiculeAvecMoteur vehicule = new VehiculeAvecMoteur(  gamme,  identifiant,  genre,  nbplace,  nbporte,  agemin,  permismin,  modele );
+    //methode ajout vehicule n3
+    public void ajouter(String gamme, String identifiant, int genre, int nbplace, int nbporte, int agemin, int permismin, String modele) {
+
+        VehiculeAvecMoteur vehicule = new VehiculeAvecMoteur(gamme, identifiant, genre, nbplace, nbporte, agemin, permismin, modele);
 
         int tab_length_0;
         tab_length_0 = flotteVehicule.length;
@@ -158,19 +89,15 @@ public class Agence {
         }
         tabtemp[tab_length_0] = vehicule;
 
-        flotteVehicule = tabtemp;          
-        
-    }
-    
-    
-    //methode ajout vehicule n 4
-    
-        
-    //methode ajout vehicule n 5
+        flotteVehicule = tabtemp;
 
-    public void ajouter(String gamme, String identifiant, int genre, int nbplace, int nbporte, int agemin, int permismin, String modele, int chargecap){
-        
-        VehiculeAvecMoteurUtilitaire vehicule = new VehiculeAvecMoteurUtilitaire(gamme,identifiant, genre, nbplace, nbporte, agemin, permismin, modele, chargecap );
+    }
+
+    //methode ajout vehicule n 4
+    //methode ajout vehicule n 5
+    public void ajouter(String gamme, String identifiant, int genre, int nbplace, int nbporte, int agemin, int permismin, String modele, int chargecap) {
+
+        VehiculeAvecMoteurUtilitaire vehicule = new VehiculeAvecMoteurUtilitaire(gamme, identifiant, genre, nbplace, nbporte, agemin, permismin, modele, chargecap);
 
         int tab_length_0;
         tab_length_0 = flotteVehicule.length;
@@ -180,13 +107,11 @@ public class Agence {
         }
         tabtemp[tab_length_0] = vehicule;
 
-        flotteVehicule = tabtemp;          
-        
-    }
-    
-    
-    //methode ajout de location
+        flotteVehicule = tabtemp;
 
+    }
+
+    //methode ajout de location
     public void ajouter(Client client, Vehicule vehicule, LocalDate dateLocation, float prix, LocalDate dateRestitution) {
 
         Location location = new Location(client, vehicule, dateLocation, dateRestitution, prix);
@@ -199,8 +124,7 @@ public class Agence {
         }
         tabtemp[tab_length_0] = location;
 
-        agandaLocation = tabtemp;   
+        agandaLocation = tabtemp;
     }
 
-  
 }
